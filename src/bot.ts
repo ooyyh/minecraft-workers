@@ -196,7 +196,7 @@ export class MinecraftBot extends DurableObject<Env> {
       yaw: Number(input.yaw), pitch: Number(input.pitch),
     };
     if (![next.yaw, next.pitch].every(Number.isFinite)) throw Error("视角参数无效");
-    next.yaw = Math.max(-180, Math.min(180, next.yaw));
+    next.yaw = ((next.yaw % 360) + 540) % 360 - 180;
     next.pitch = Math.max(-90, Math.min(90, next.pitch));
     if (next.jump && !this.controls.jump) this.jumpQueued = true;
     this.controls = next;

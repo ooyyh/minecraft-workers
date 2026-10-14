@@ -4,7 +4,9 @@
 
 运行在 Cloudflare Workers 和 Durable Objects 上的 Minecraft Java 1.8.9 离线机器人，提供中文管理控制台、服务器配置、状态监控、聊天和简化第一人称画面。
 
-> 上图是 AI 生成的项目主题插画，不是控制台截图。实际画面使用轻量 Canvas 体素渲染。
+> 上图是 AI 生成的项目主题插画，不是控制台截图。实际画面使用轻量 Three.js WebGL 体素渲染。
+
+浏览器通过固定版本的 jsDelivr 模块加载 Three.js 0.180.0，使用共享立方体几何和 `InstancedMesh` 批量绘制方块。需要 WebGL 2；点击画面锁定鼠标，WASD 移动、空格跳跃，滚轮调整视野，支持全屏。画面只渲染附近方块，采用纯色和简化光照。
 
 [控制台](https://minecraft-connectivity-probe.ooyyh.workers.dev/) · [API 文档](https://minecraft-connectivity-probe.ooyyh.workers.dev/docs)
 
@@ -76,7 +78,7 @@ src/index.ts          HTTP 路由和服务器状态探测
 src/bot.ts            Durable Object 连接、机器人状态和简化物理
 src/bot-protocol.ts   Java 1.8.9 登录与数据包编解码
 src/world.ts          区块解码和体素缓存
-src/world-view.ts     Canvas 渲染与输入控制
+src/world-view.ts     Three.js WebGL 渲染与输入控制
 src/page.ts           中文管理控制台
 src/target.ts         服务器默认配置和输入校验
 src/auth.ts           管理员认证

@@ -56,7 +56,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const path = new URL(request.url).pathname;
     const headers = { "Cache-Control": "no-store" };
-    if (path === "/" && request.method === "GET") return new Response(page, { headers: { "Content-Type": "text/html; charset=utf-8", ...headers, "Content-Security-Policy": "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'" } });
+    if (path === "/" && request.method === "GET") return new Response(page, { headers: { "Content-Type": "text/html; charset=utf-8", ...headers, "Content-Security-Policy": "default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; connect-src 'self' https://cdn.jsdelivr.net; base-uri 'none'; form-action 'self'; frame-ancestors 'none'" } });
     if (path === "/docs" && request.method === "GET") return new Response(apiDocs, { headers: { "Content-Type": "text/html; charset=utf-8", ...headers } });
     if (path === "/world.js" && request.method === "GET") return new Response(worldViewScript, { headers: { "Content-Type": "text/javascript; charset=utf-8", ...headers, "X-Content-Type-Options": "nosniff" } });
     if (path === "/api/login" && request.method === "POST") {

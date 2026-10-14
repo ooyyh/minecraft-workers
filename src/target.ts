@@ -11,7 +11,10 @@ export function serverTarget(input: Record<string, unknown>): ServerTarget {
   if (/[^a-z0-9.:-]/.test(hostname) || hostname.includes("..") || hostname.includes("/") || hostname.includes("@")) {
     throw Error("地址只支持域名、IPv4 或 IPv6，不要包含协议、路径或账号");
   }
-  if (/^(localhost|127\.|0\.0\.0\.0|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.|::1$|fc|fd)/.test(hostname)) {
+  if (/^(localhost|127\.|0\.0\.0\.0|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(hostname)) {
+    throw Error("服务器必须是公网地址");
+  }
+  if (hostname.includes(":") && /^(::1|::|fc|fd|fe[89ab]|ff)/.test(hostname)) {
     throw Error("服务器必须是公网地址");
   }
   if (!hostname.includes(":")) {

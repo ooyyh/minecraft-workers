@@ -116,11 +116,13 @@ export default {
     // Legacy probe endpoints are now protected because the Worker hosts an admin console.
     if (!await authenticated(request, env)) return Response.json({ error: "请先登录" }, { status: 401, headers });
     if (path === "/" || path === "/worker") {
-      const result = await probe();
+      const target = await env.MC_BOT.getByName("simpfun-world-v3").config();
+      const result = await probe(target.target);
       return Response.json({ location: "worker", ...result }, { status: result.ok ? 200 : 502, headers });
     }
     if (path === "/do") {
-      const result = await env.MC_PROBE.getByName("simpfun-status").status();
+      const target = await env.MC_BOT.getByName("simpfun-world-v3").config();
+      const result = await probe(target.target);
       return Response.json({ location: "durable-object", ...result }, { status: result.ok ? 200 : 502, headers });
     }
     if (path === "/runtime") return Response.json({ worker: runtimeChecks(), durableObject: await env.MC_PROBE.getByName("runtime").capabilities() }, { headers });

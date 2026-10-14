@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "minecraft-connectivity-probe",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "secrets": { "required": ["ADMIN_PASSWORD"] },
+  "durable_objects": {
+    "bindings": [
+      { "name": "MC_PROBE", "class_name": "MinecraftProbe" },
+      { "name": "MC_BOT", "class_name": "MinecraftBot" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["MinecraftProbe"] },
+    { "tag": "v2", "new_sqlite_classes": ["MinecraftBot"] }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "traces": { "enabled": true }
+  }
+}
